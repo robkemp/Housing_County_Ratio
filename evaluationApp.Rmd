@@ -1,0 +1,45 @@
+---
+title: "Quick Eval"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(codemogShiny)
+source("housing surplus script.r")
+```
+
+<!-- Column {.sidebar} -->
+<!-- ----------------------------------------------------------------------- -->
+
+<!-- ```{r} -->
+<!-- geoInput() -->
+
+<!-- ``` -->
+
+Column 
+-----------------------------------------------------------------------
+
+<!-- Row  -->
+<!-- ----------------------------------------------------------------------- -->
+
+<!-- ```{r} -->
+<!-- renderPlot({ -->
+<!--   data%>% -->
+<!--     filter() -->
+
+<!-- }) -->
+
+<!-- ``` -->
+<!-- Row  -->
+<!-- ----------------------------------------------------------------------- -->
+
+```{r}
+renderDataTable(select(data, county, year, housingchange,newhouseholds,impliedHH,vacanthousingunits,surplus_implied,surplus_hh,surplus_supply), options = list(paging = FALSE))
+
+```
+
