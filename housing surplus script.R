@@ -35,7 +35,12 @@ all_data=bind_rows(all_data_prev, current_data)
 
 front_range=c(1,5,13,14,31,35,39,41,69,101,123)
 
-
+census=readxl::read_excel("subcorev_v2015_CO.xls")%>%
+  gather(variable, value, -SUMLEV:-COUNTY_NAME)%>%
+  mutate(year=stringr::str_sub(variable, -5, -1),
+         year=stringr::str_sub(year, -4,-1),
+         variable=stringr::str_sub(variable, 1, nchar(as.character(variable))-5))%>%
+  spread(variable, value)
 
 
 #### Surplus Housing Ratio ####
@@ -53,4 +58,22 @@ data=all_data%>%
          surplus_hh=housingchange-newhouseholds,
          surplus_supply=(housingchange+vacanthousingunits)-newhouseholds)%>%
   filter(year!=1999)
+
+
+denver=census%>%
+  filter(PLACE=="20000", SUMLEV=="157")%>%
+  mutate(RESPOP=as.numeric(RESPOP),
+         HU=as.numeric(HU),
+         PPH=as.numeric(PPH),
+         OCCHUr=as.numeric(OCCHUr),
+         populationchange=RESPOP-lag(RESPOP),
+         housingchange=HU-lag(HU),
+         vacantunits=(HU*(1-OCCHUr)),
+         vacancyrate=scales::percent(vacantunits/HU),
+         impliedHH=populationchange/PPH,
+         surplus_implied=housingchange-impliedHH,
+         surplus_supply=(housingchange+vacantunits)-impliedHH)%>%
+  filter(year>2010)%>%
+  select(NAME, year, RESPOP, HU, PPH, OCCHUr, populationchange, housingchange, vacantunits, vacancyrate,
+         impliedHH, surplus_implied, surplus_supply, RAKE)
   

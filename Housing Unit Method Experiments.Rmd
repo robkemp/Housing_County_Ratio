@@ -50,7 +50,7 @@ Apartment Vacancy Survey data
 
 ## Census Data Look for Denver
 
-Denver is having a ton of change and to illustrate the issues, I've pulled out the following data.  
+The whole problem was semi-spurred by the analysis of Census data by Aldo and trying to make sense of that.  I've taken our data and looked at it a bit more closely.
 
 ```{r}
 
