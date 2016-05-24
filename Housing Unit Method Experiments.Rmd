@@ -1,0 +1,59 @@
+---
+title: "Housing Unit Method Experiments"
+author: "Rob Kemp \nState Demography Office"
+date: "May 24, 2016"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+source("housing surplus script.R")
+
+acs = src_sqlite("acs_oneyear.sqlite3", create=F)
+
+```
+
+The housing unit method excels when there is reliable and moderate change.  That isn't the case right now in many places throughout the state.  It is especially problematic in places that are growing and housing pressure is enourmous such as Denver and Adams county.  We're trying to also understand if there is a housing unit defecit and if so, what that is.  Toward that end, we need to study alternative ways of understanding the persons per household and vacancy rate, or at least affirm our assumptions.
+
+## Goals
+
+Understand vacancy rate and persons per household data and assumptions better, especially for Denver.
+
+Figure out if the method can be trusted to look at housing defecit.
+
+
+## Research Questions
+
+1. Are there major differences for Denver in the unweighted and weighted estimates on Vr and Pph?
+    a. Do these differences seem tied to other characteristics like income?
+    
+2. What is a reasonable assumption when the model wants to push Vr negative? Is there a better answer than zero?
+
+3. Can we use other vacancy rate surveys as indicators for how to move ours?
+
+4. Are there translatable findings that won't unnecessarily complicate the model for estimates?
+
+5. What do these findings suggest about a housing defecit?
+
+6. Can we use some of these findings to identify a new method for intercensal population estimates.
+
+## Data Sources
+
+Census Bureau Estimates Data
+
+ACS 1-year PUMS data for CO
+
+Apartment Vacancy Survey data
+
+
+## Census Data Look for Denver
+
+Denver is having a ton of change and to illustrate the issues, I've pulled out the following data.  
+
+```{r}
+
+renderDataTable(variation, options = list(paging = FALSE)))
+
+```
